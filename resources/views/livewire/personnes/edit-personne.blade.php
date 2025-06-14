@@ -373,6 +373,7 @@
   $(document).ready(function(){
     flatpickr("#datepicker", {
       dateFormat: "d/m/Y",
+       locale: 'fr',
       onChange: function(selectedDates, dateStr) {
         $wire.set('date_embauche', dateStr);
       }
