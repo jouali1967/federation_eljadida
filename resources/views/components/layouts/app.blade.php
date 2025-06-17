@@ -45,123 +45,23 @@
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
         <ul class="navbar-nav ms-auto">
-          <!--begin::Navbar Search-->
-          <!--end::Navbar Search-->
-          <!--begin::Messages Dropdown Menu-->
-          <li class="nav-item dropdown">
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-              <a href="#" class="dropdown-item">
-                <!--begin::Message-->
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img src="{{ asset('dist/assets/img/user1-128x128.jpg') }}" alt="User Avatar"
-                      class="img-size-50 rounded-circle me-3" />
-                  </div>
-                  <div class="flex-grow-1">
-                    <h3 class="dropdown-item-title">
-                      Brad Diesel
-                      <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
-                    </h3>
-                    <p class="fs-7">Call me whenever you can...</p>
-                    <p class="fs-7 text-secondary">
-                      <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!--end::Message-->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <!--begin::Message-->
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img src="{{ asset('dist/assets/img/user1-128x128.jpg') }}" alt="User Avatar"
-                      class="img-size-50 rounded-circle me-3" />
-                  </div>
-                  <div class="flex-grow-1">
-                    <h3 class="dropdown-item-title">
-                      John Pierce
-                      <span class="float-end fs-7 text-secondary">
-                        <i class="bi bi-star-fill"></i>
-                      </span>
-                    </h3>
-                    <p class="fs-7">I got your message bro</p>
-                    <p class="fs-7 text-secondary">
-                      <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!--end::Message-->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <!--begin::Message-->
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img src="{{ asset('dist/assets/img/user3-128x128.jpg') }}" alt="User Avatar"
-                      class="img-size-50 rounded-circle me-3" />
-                  </div>
-                  <div class="flex-grow-1">
-                    <h3 class="dropdown-item-title">
-                      Nora Silvester
-                      <span class="float-end fs-7 text-warning">
-                        <i class="bi bi-star-fill"></i>
-                      </span>
-                    </h3>
-                    <p class="fs-7">The subject goes here</p>
-                    <p class="fs-7 text-secondary">
-                      <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!--end::Message-->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <!--begin::User Menu Simple-->
+          <li class="nav-item d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center">
+              <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow me-2"
+                style="width: 32px; height: 32px;" alt="User Image" />
+              <span class="d-none d-md-inline text-dark">{{ Auth::user()->name }}</span>
             </div>
+            <form action="{{ route('logout') }}" method="POST" class="m-0">
+              @csrf
+              <button type="submit" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                <span class="d-none d-md-inline">Déconnexion</span>
+              </button>
+            </form>
           </li>
-          <!--end::Messages Dropdown Menu-->
-          <!--begin::Notifications Dropdown Menu-->
-          <!--end::Notifications Dropdown Menu-->
-          <!--begin::Fullscreen Toggle-->
-          <!--end::Fullscreen Toggle-->
-          <!--begin::User Menu Dropdown-->
-          <li class="nav-item dropdown user-menu">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="user-image rounded-circle shadow"
-                alt="User Image" />
-              <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-              <!--begin::User Image-->
-              <li class="user-header text-bg-primary">
-                <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow"
-                  alt="User Image" />
-                <p>
-                  {{Auth::user()->name  }}
-               </p>
-              </li>
-              <!--end::User Image-->
-              <!--begin::Menu Body-->
-              <!--end::Menu Body-->
-              <!--begin::Menu Footer-->
-              <li class="user-footer">
-                <livewire:auth.logout-button />
-                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                  @csrf
-                  <button type="submit" class="btn btn-default btn-flat float-end">
-                    <i class="fas fa-sign-out-alt me-2"></i>{{ __('Déconnexion') }}
-                  </button>
-                </form> --}}
-                {{-- <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> --}}
-              
-              </li>
-              <!--end::Menu Footer-->
-            </ul>
-          </li>
-          <!--end::User Menu Dropdown-->
+          <!--end::User Menu Simple-->
         </ul>
-        <!--end::End Navbar Links-->
       </div>
       <!--end::Container-->
     </nav>
@@ -229,7 +129,6 @@
   <script src="{{ asset('dist/datepicker/l10n/fr.js') }}"></script>
   <script src="{{ asset('dist/js/monthSelectIndex.js') }}"></script>
   <script src="{{ asset('dist/js/select2.min.js') }}"></script>
-
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
   @livewireScripts {{-- Laissez Livewire Scripts en dernier --}}
