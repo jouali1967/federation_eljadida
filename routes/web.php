@@ -34,10 +34,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-   return redirect('/login');;
+  return redirect('/login');;
 });
 
 Auth::routes();
+
 Route::middleware(['auth'])->group(function () {
   Route::get('/', HomePage::class)->name('home.page');
   //Routes pour les employers
@@ -78,8 +79,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/etat-employes/download', [EtatEmployesPdfController::class, 'download'])->name('etat.employes.download')->middleware('permission:etat.employes.download');
 });
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
-    Route::get('/admin/users', UserManagement::class)->name('admin.users');
-    Route::get('/admin/roles', RoleManagement::class)->name('admin.roles');
+  Route::get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
+  Route::get('/admin/users', UserManagement::class)->name('admin.users');
+  Route::get('/admin/roles', RoleManagement::class)->name('admin.roles');
 });
-

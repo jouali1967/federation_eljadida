@@ -138,9 +138,8 @@
                 <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow"
                   alt="User Image" />
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2023</small>
-                </p>
+                  {{Auth::user()->name  }}
+               </p>
               </li>
               <!--end::User Image-->
               <!--begin::Menu Body-->
@@ -155,6 +154,7 @@
                   </button>
                 </form> --}}
                 {{-- <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> --}}
+              
               </li>
               <!--end::Menu Footer-->
             </ul>

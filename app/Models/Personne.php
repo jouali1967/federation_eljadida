@@ -54,7 +54,7 @@ class Personne extends Model
   public function declarations(){
     return $this->hasMany(Declaration::class);
   }
-  public function sanctionns(){
+  public function sanctions(){
     return $this->hasMany(Sanction::class);
   }
   public function primes(){
