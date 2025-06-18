@@ -19,7 +19,7 @@ class Personne extends Model
     'date_nais',
     'sexe',
     'sit_fam',
-    'email','fonction','banque','num_compte','salaire_base','cin','categ'
+    'email','fonction','banque','num_compte','salaire_base','cin','categ','status'
   ];
   protected $casts = [
     'date_embauche' => 'date:d/m/Y',

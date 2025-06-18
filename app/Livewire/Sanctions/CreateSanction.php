@@ -101,7 +101,7 @@ class CreateSanction extends Component
     {
       $results=Personne::find(3)->enfants()
               ->where('sexe','M')->get();  
-      dd($results);
+      //dd($results);
       return view('livewire.sanctions.create-sanction');
     }
 } 

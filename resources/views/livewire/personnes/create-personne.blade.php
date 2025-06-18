@@ -354,6 +354,24 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Statut -->
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <div class="form-group mb-2">
+                    <label class="form-label mb-1">Statut</label>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="status" wire:model="status" >
+                      <label class="form-check-label" for="status">
+                        <span class="badge" :class="status ? 'bg-success' : 'bg-secondary'">
+                          {{ $status ? 'Actif' : 'Inactif' }}
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group text-center mt-3">
                 <button type="submit" class="btn btn-primary px-5">
                   <span>
@@ -374,7 +392,7 @@
     $(document).ready(function(){
       flatpickr("#datepicker", {
         dateFormat: "d/m/Y",
-         locale: 'fr',
+        locale: 'fr',
         allowInput: true,
         onChange: function(selectedDates, dateStr) {
           $wire.set('date_embauche', dateStr === null ? '' : dateStr);
@@ -383,6 +401,7 @@
 
       flatpickr("#date_nais_picker", {
         dateFormat: "d/m/Y",
+        locale: 'fr',
         allowInput: true,
         onChange: function(selectedDates, dateStr) {
           $wire.set('date_nais', dateStr === null ? '' : dateStr);

@@ -77,7 +77,7 @@
                       <i class="fas fa-phone"></i>
                     </span>
                     <input id="cin" type="tel" class="form-control @error('cin') is-invalid @enderror"
-                      wire:model.live="cin" >
+                      wire:model.live="cin">
                   </div>
                   @error('cin')
                   <div class="invalid-feedback d-block">
@@ -350,6 +350,23 @@
                     {{ $message }}
                   </div>
                   @enderror
+                </div>
+              </div>
+            </div>
+
+            <!-- Statut -->
+            <div class="row g-2">
+              <div class="col-md-4">
+                <div class="form-group mb-2">
+                  <label class="form-label mb-1">Statut</label>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="status" wire:model="status" value="1">
+                    <label class="form-check-label" for="status">
+                      <span class="badge {{ $status ? 'bg-success' : 'bg-secondary' }}">
+                        {{ $status ? 'Actif' : 'Inactif' }}
+                      </span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

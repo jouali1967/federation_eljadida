@@ -14,13 +14,13 @@ class CreatePersonne extends Component
   #[Validate('regex:/^[A-Z0-9\s]+$/', message: 'Le nom doit contenir uniquement des majuscules, des chiffres et des espaces.')]
   public $nom;
   #[Rule('required', message: 'Le prenom est obligatoire.')]
-  #[Rule('regex:/^[A-Z0-9\s]+$/', message: 'Le prenom doit contenir uniquement des majuscules, des chiffres et des espaces.')] 
+  #[Rule('regex:/^[A-Z0-9\s]+$/', message: 'Le prenom doit contenir uniquement des majuscules, des chiffres et des espaces.')]
   public $prenom;
   #[Rule('required', message: 'N° telephone est obligatoire.')]
-  #[Rule('numeric', message: 'Le numéro de téléphone ne doit contenir que des chiffres.')]  
+  #[Rule('numeric', message: 'Le numéro de téléphone ne doit contenir que des chiffres.')]
   public $phone;
   #[Rule('required', message: 'Le champ adresse est obligatoire.')]
-  #[Rule('regex:/^[a-zA-Z0-9\s]+$/', message: 'Adresse doit contenir uniquement des majuscules, des chiffres et des espaces.')] 
+  #[Rule('regex:/^[a-zA-Z0-9\s]+$/', message: 'Adresse doit contenir uniquement des majuscules, des chiffres et des espaces.')]
   public $adresse;
   #[Rule('required', message: "La date d'embauche est obligatoire.")]
   #[Rule('date_format:d/m/Y', message: "Le format de la date doit être JJ/MM/AAAA.")]
@@ -36,7 +36,7 @@ class CreatePersonne extends Component
   public $sit_fam;
   #[Rule('nullable|email', message: [
     'email' => 'Format email non valide'
-])]
+  ])]
   public $email;
   #[Rule('required', message: 'Fonction est obligatoire')]
 
@@ -51,23 +51,27 @@ class CreatePersonne extends Component
   public $num_compte;
   #[Rule('required|numeric|min:0|decimal:0,2')]
   public $salaire_base;
-#[Rule('required', message: 'Le champ cin est obligatoire.')]
-#[Rule('regex:/^[A-Z0-9\s]+$/', message: 'Le cin doit contenir uniquement des majuscules, des chiffres et des espaces.')] 
+  #[Rule('required', message: 'Le champ cin est obligatoire.')]
+  #[Rule('regex:/^[A-Z0-9\s]+$/', message: 'Le cin doit contenir uniquement des majuscules, des chiffres et des espaces.')]
 
   public $cin;
   #[Rule('required', message: 'Categorieest obligatoire')]
   public $categ;
-public function messages(){
-  return[
-    'num_compte.required'=>'obligatoire',
-    'num_compte.numeric'=>'entiers',
-    'num_compte.digits'=>'24 chiffres',
-    'salaire_base.required' => 'Le salaire de base est obligatoire',
-    'salaire_base.numeric' => 'Le salaire de base doit être un nombre',
-    'salaire_base.min' => 'Le salaire de base doit être positif',
-    'salaire_base.decimal' => 'Le salaire de base doit avoir au maximum 2 chiffres après la virgule'
-  ];
-}
+  #[Rule('boolean')]
+  public $status = true;
+
+  public function messages()
+  {
+    return [
+      'num_compte.required' => 'obligatoire',
+      'num_compte.numeric' => 'entiers',
+      'num_compte.digits' => '24 chiffres',
+      'salaire_base.required' => 'Le salaire de base est obligatoire',
+      'salaire_base.numeric' => 'Le salaire de base doit être un nombre',
+      'salaire_base.min' => 'Le salaire de base doit être positif',
+      'salaire_base.decimal' => 'Le salaire de base doit avoir au maximum 2 chiffres après la virgule'
+    ];
+  }
   // protected $rules = [
   //   'nom' => 'required',
   //   'prenom' => 'required',
@@ -145,10 +149,9 @@ public function messages(){
   public function save()
   {
     $validatedData = $this->validate();
-      //dd($validatedData);
-      Personne::create($validatedData);
+    //dd($validatedData);
+    Personne::create($validatedData);
 
-      $this->reset();
-
+    $this->reset();
   }
 }
