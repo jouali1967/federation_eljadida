@@ -1,5 +1,5 @@
 <div>
-  <div class="container mt-2">
+  <div class=" mt-2">
     <div class="row justify-content-center">
       <div class="col-md-10">
         <div class="card shadow-sm">
@@ -222,7 +222,7 @@
                         wire:model.live="fonction_id">
                         <option value="">Sélectionnez une fonction</option>
                         @foreach ($fonctions as $fonction)
-                            <option value="{{ $fonction->id }}">{{ $fonction->libelle }}</option>
+                        <option value="{{ $fonction->id }}">{{ $fonction->libelle }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -245,7 +245,7 @@
                         wire:model.live="categ_id">
                         <option value="">Sélectionnez une catégorie</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->libelle }}</option>
+                        <option value="{{ $category->id }}">{{ $category->libelle }}</option>
                         @endforeach
                       </select>
                     </div>
@@ -365,13 +365,37 @@
                   <div class="form-group mb-2">
                     <label class="form-label mb-1">Statut</label>
                     <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="status" wire:model="status" >
+                      <input class="form-check-input" type="checkbox" id="status" wire:model="status">
                       <label class="form-check-label" for="status">
                         <span class="badge" :class="status ? 'bg-success' : 'bg-secondary'">
                           {{ $status ? 'Actif' : 'Inactif' }}
                         </span>
                       </label>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Photo de l'employé -->
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <div class="form-group mb-2">
+                    <label for="photo_emp" class="form-label mb-1">
+                      Photo de l'employé
+                    </label>
+                    <input id="photo_emp" type="file" class="form-control @error('photo_emp') is-invalid @enderror"
+                      wire:model="photo_emp" accept="image/*">
+                    @error('photo_emp')
+                    <div class="invalid-feedback d-block">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                    @if ($photo_emp)
+                    <div class="mt-2">
+                      <img src="{{ $photo_emp->temporaryUrl() }}" alt="Aperçu photo" class="img-thumbnail"
+                        style="max-width: 150px;">
+                    </div>
+                    @endif
                   </div>
                 </div>
               </div>

@@ -9,9 +9,12 @@ use Livewire\Component;
 use App\Models\Personne;
 use Livewire\Attributes\Rule;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 
 class CreatePersonne extends Component
 {
+  use WithFileUploads;
+
   #[Validate('required', message: 'Le nom est obligatoire.')]
   #[Validate('regex:/^[A-Z0-9\s]+$/', message: 'Le nom doit contenir uniquement des majuscules, des chiffres et des espaces.')]
   public $nom;
@@ -61,6 +64,8 @@ class CreatePersonne extends Component
   public $categ_id;
   #[Rule('boolean')]
   public $status = true;
+  #[Rule('nullable|image|max:2048')]
+  public $photo_emp;
 
   public function messages()
   {
@@ -145,16 +150,17 @@ class CreatePersonne extends Component
     ->withCount('enfants')
     ->get();
     dd($personnes);*/
-    $categories=Category::all();
-    $fonctions=Fonction::all();
-    return view('livewire.personnes.create-personne',compact('categories','fonctions'));
+    $categories = Category::all();
+    $fonctions = Fonction::all();
+    return view('livewire.personnes.create-personne', compact('categories', 'fonctions'));
   }
   public function save()
   {
     $validatedData = $this->validate();
-    //dd($validatedData);
+    if ($this->photo_emp) {
+      $validatedData['photo_emp'] = $this->photo_emp->store('photos', 'public');
+    }
     Personne::create($validatedData);
-
     $this->reset();
   }
 }

@@ -8,10 +8,13 @@ use App\Models\Fonction;
 use App\Models\Personne;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Validate;
+use Livewire\WithFileUploads;
 use Illuminate\Validation\ValidationException;
 
 class EditPersonne extends Component
 {
+  use WithFileUploads;
+
   public $personne;
   #[Validate('required', message: 'Le nom est obligatoire.')]
   #[Validate('regex:/^[A-Z0-9\s]+$/', message: 'Le nom doit contenir uniquement des majuscules, des chiffres et des espaces.')]
@@ -62,6 +65,9 @@ class EditPersonne extends Component
   public $categ_id;
   #[Rule('boolean')]
   public $status = true;
+  #[Rule('nullable|image|max:2048')]
+  public $photo_emp;
+  public $photo_emp_db;
 
   public function messages()
   {
@@ -95,6 +101,7 @@ class EditPersonne extends Component
     $this->cin = $this->personne->cin;
     $this->categ_id = $this->personne->categ_id;
     $this->status = (bool) $this->personne->status;
+    $this->photo_emp_db = $this->personne->photo_emp;
   }
 
 
@@ -102,15 +109,19 @@ class EditPersonne extends Component
   {
     $validatedData = $this->validate();
     $validatedData['status'] = $this->status ? 1 : 0;
+    if ($this->photo_emp) {
+      $validatedData['photo_emp'] = $this->photo_emp->store('photos', 'public');
+    } else {
+      $validatedData['photo_emp'] = $this->photo_emp_db;
+    }
     $this->personne->update($validatedData);
-    //dd($validatedData);
     $this->redirect(route('personnes.index'), navigate: true);
   }
 
   public function render()
   {
-    $categories=Category::all();
-    $fonctions=Fonction::all();
-    return view('livewire.personnes.edit-personne',compact('categories','fonctions'));
+    $categories = Category::all();
+    $fonctions = Fonction::all();
+    return view('livewire.personnes.edit-personne', compact('categories', 'fonctions'));
   }
 }

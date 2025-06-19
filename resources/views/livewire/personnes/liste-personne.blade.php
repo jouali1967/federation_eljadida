@@ -28,6 +28,7 @@
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>Photo</th>
                   <th wire:click="sortBy('nom')" style="cursor: pointer;">
                     Nom
                     @if($sortField === 'nom')
@@ -65,11 +66,20 @@
                 </tr>
               </thead>
               <tbody>
-                @php $i = ($personnes instanceof \Illuminate\Pagination\LengthAwarePaginator) ? ($personnes->currentPage() - 1) *
+                @php $i = ($personnes instanceof \Illuminate\Pagination\LengthAwarePaginator) ?
+                ($personnes->currentPage() - 1) *
                 $personnes->perPage() + 1 : 1; @endphp
                 @forelse($personnes as $personne)
                 <tr>
                   <td>{{ $i++ }}</td>
+                  <td>
+                    @if($personne->photo_emp)
+                    <img src="{{ asset('storage/' . $personne->photo_emp) }}" alt="Photo" class="rounded-circle"
+                      style="width:40px; height:40px; object-fit:cover;">
+                    @else
+                    <span class="text-muted">-</span>
+                    @endif
+                  </td>
                   <td>{{ $personne->nom }}</td>
                   <td>{{ $personne->prenom }}</td>
                   <td>{{ $personne->phone }}</td>
