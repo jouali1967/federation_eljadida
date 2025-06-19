@@ -1,16 +1,19 @@
 <?php
 
-use App\Livewire\Admin\Dashboard;
-use App\Livewire\Admin\RoleManagement;
-use App\Livewire\Admin\UserManagement;
-use App\Livewire\Augmentations\ListAugmentation;
+use App\Http\Controllers\VirementBanquePdfController;
 use App\Livewire\HomePage;
+use App\Livewire\Admin\Dashboard;
 use App\Livewire\Cnss\CnssCreate;
 use App\Livewire\Primes\EditPrime;
 use App\Livewire\Primes\ListePrime;
 use App\Livewire\Primes\CreatePrime;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Livewire\Admin\RoleManagement;
+use App\Livewire\Admin\UserManagement;
 use App\Livewire\Enfants\EnfantCreate;
 use App\Livewire\Personnes\MontantDec;
+use App\Livewire\Salaires\VirementPdf;
 use App\Livewire\Personnes\EditPersonne;
 use App\Livewire\Personnes\EtatEmployes;
 use App\Livewire\Sanctions\EditSanction;
@@ -24,14 +27,13 @@ use App\Livewire\Salaires\SalaireImpression;
 use App\Livewire\Personnes\ListePersonnesPdf;
 use App\Livewire\Sanctions\ListeSanctionsPdf;
 use App\Http\Controllers\PdfPersonneController;
+use App\Livewire\Augmentations\ListAugmentation;
 use App\Livewire\Declarations\PersonnesDeclares;
 use App\Livewire\Augmentations\CreateAugmentation;
+
 use App\Http\Controllers\EtatDeclaresPdfController;
 use App\Http\Controllers\EtatEmployesPdfController;
 use App\Http\Controllers\SalaireImpressionPdfController;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
   return redirect('/login');;
@@ -60,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/salaires/gestion', GestionSalaire::class)->name('salaires.gestion')->middleware('permission:salaires.gestion');
   Route::get('/salaires/impression', SalaireImpression::class)->name('salaires.impression')->middleware('permission:salaires.impression');
   Route::get('/salaires/impression/pdf', [SalaireImpressionPdfController::class, 'export'])->name('salaires.impression.pdf')->middleware('permission:salaires.impression.pdf');
+  Route::get('/salaires/virement', VirementPdf::class)->name('salaires.virement')->middleware('permission:salaires.virement');
+  Route::get('/salaires/virement/pdf', [VirementBanquePdfController::class, 'export'])->name('salaires.virement.pdf')->middleware('permission:salaires.virement.pdf');
+
   //cnss
   Route::get('/cnss/create', CnssCreate::class)->name('cnss.create')->middleware('permission:cnss.create');
   //enfants

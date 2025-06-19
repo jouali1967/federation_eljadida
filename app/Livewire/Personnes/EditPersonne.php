@@ -3,6 +3,8 @@
 namespace App\Livewire\Personnes;
 
 use Livewire\Component;
+use App\Models\Category;
+use App\Models\Fonction;
 use App\Models\Personne;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Validate;
@@ -41,7 +43,7 @@ class EditPersonne extends Component
   public $email;
   #[Rule('required', message: 'Fonction est obligatoire')]
 
-  public $fonction;
+  public $fonction_id;
   #[Rule('required', message: 'Banque est obligatoire')]
 
   public $banque;
@@ -57,7 +59,7 @@ class EditPersonne extends Component
 
   public $cin;
   #[Rule('required', message: 'Categorieest obligatoire')]
-  public $categ;
+  public $categ_id;
   #[Rule('boolean')]
   public $status = true;
 
@@ -86,12 +88,12 @@ class EditPersonne extends Component
     $this->sexe = $this->personne->sexe;
     $this->sit_fam = $this->personne->sit_fam;
     $this->email = $this->personne->email;
-    $this->fonction = $this->personne->fonction;
+    $this->fonction_id = $this->personne->fonction_id;
     $this->banque = $this->personne->banque;
     $this->num_compte = $this->personne->num_compte;
     $this->salaire_base = $this->personne->salaire_base;
     $this->cin = $this->personne->cin;
-    $this->categ = $this->personne->categ;
+    $this->categ_id = $this->personne->categ_id;
     $this->status = (bool) $this->personne->status;
   }
 
@@ -107,6 +109,8 @@ class EditPersonne extends Component
 
   public function render()
   {
-    return view('livewire.personnes.edit-personne');
+    $categories=Category::all();
+    $fonctions=Fonction::all();
+    return view('livewire.personnes.edit-personne',compact('categories','fonctions'));
   }
 }

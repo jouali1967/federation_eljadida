@@ -108,6 +108,8 @@
   $(document).ready(function(){
     flatpickr("#date_virement", {
       dateFormat: "d/m/Y",
+      locale:"fr",
+      allowInput: true,
       onChange: function(selectedDates, dateStr) {
         $wire.set('date_virement', dateStr);
       }

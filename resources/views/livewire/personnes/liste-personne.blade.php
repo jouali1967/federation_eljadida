@@ -27,6 +27,7 @@
             <table class="table table-hover table-bordered table-sm table-striped">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th wire:click="sortBy('nom')" style="cursor: pointer;">
                     Nom
                     @if($sortField === 'nom')
@@ -64,8 +65,11 @@
                 </tr>
               </thead>
               <tbody>
+                @php $i = ($personnes instanceof \Illuminate\Pagination\LengthAwarePaginator) ? ($personnes->currentPage() - 1) *
+                $personnes->perPage() + 1 : 1; @endphp
                 @forelse($personnes as $personne)
                 <tr>
+                  <td>{{ $i++ }}</td>
                   <td>{{ $personne->nom }}</td>
                   <td>{{ $personne->prenom }}</td>
                   <td>{{ $personne->phone }}</td>

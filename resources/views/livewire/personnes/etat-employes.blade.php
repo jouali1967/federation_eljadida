@@ -112,6 +112,7 @@
                       <i class="fas fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ms-1"></i>
                       @endif
                     </th>
+                    <th>Categorie</th>
                     <th scope="col" style="width: 10%">Sexe</th>
                     <th scope="col" style="width: 15%" wire:click="sortBy('date_embauche')" style="cursor: pointer;">
                       Date Embauche
@@ -136,7 +137,10 @@
                       <strong>{{ strtoupper($employe->nom) }} {{ ucfirst(strtolower($employe->prenom)) }}</strong>
                     </td>
                     <td>
-                      <span class="badge bg-secondary">{{ $employe->fonction ?: 'Non définie' }}</span>
+                      <span class="badge bg-secondary">{{ $employe->fonction->libelle ?: 'Non définie' }}</span>
+                    </td>
+                    <td>
+                      <span class="badge bg-secondary">{{ $employe->categorie->libelle ?: 'Non définie' }}</span>
                     </td>
                     <td>
                       @if($employe->sexe === 'M')

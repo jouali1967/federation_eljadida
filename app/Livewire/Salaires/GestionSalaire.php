@@ -33,7 +33,7 @@ class GestionSalaire extends Component
       ->get();
       
     // Récupérer toutes les personnes
-    $personnes = Personne::all();
+    $personnes = Personne::where('status',true)->get();
     foreach ($personnes as $personne) {
       // Calculer les sanctions et les primes
       $montantSanction = Sanction::where('personne_id', $personne->id)

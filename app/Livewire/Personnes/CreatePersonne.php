@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Personnes;
 
+use App\Models\Category;
+use App\Models\Fonction;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use App\Models\Personne;
@@ -40,7 +42,7 @@ class CreatePersonne extends Component
   public $email;
   #[Rule('required', message: 'Fonction est obligatoire')]
 
-  public $fonction;
+  public $fonction_id;
   #[Rule('required', message: 'Banque est obligatoire')]
 
   public $banque;
@@ -56,7 +58,7 @@ class CreatePersonne extends Component
 
   public $cin;
   #[Rule('required', message: 'Categorieest obligatoire')]
-  public $categ;
+  public $categ_id;
   #[Rule('boolean')]
   public $status = true;
 
@@ -143,8 +145,9 @@ class CreatePersonne extends Component
     ->withCount('enfants')
     ->get();
     dd($personnes);*/
-
-    return view('livewire.personnes.create-personne');
+    $categories=Category::all();
+    $fonctions=Fonction::all();
+    return view('livewire.personnes.create-personne',compact('categories','fonctions'));
   }
   public function save()
   {

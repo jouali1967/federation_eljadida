@@ -26,7 +26,7 @@ class DynamicSidebar extends Component
                     'route_group_pattern' => 'personnes.*',
                     'items' => [
                         'personnes.create' => ['title' => 'Ajouter Employé'],
-                        'personnes.index' => ['title' => 'Liste Employés'],
+                        'personnes.index' => ['title' => 'Mis à jour Employés'],
                     ],
                     'order' => 1,
                 ],
@@ -57,6 +57,7 @@ class DynamicSidebar extends Component
                     'items' => [
                         'salaires.gestion' => ['title' => 'Salaires'],
                         'salaires.impression' => ['title' => 'Impression Salaires'],
+                        'salaires.virement' => ['title' => 'Virement Banque PDF'],
                     ],
                     'order' => 4,
                 ],
@@ -103,7 +104,7 @@ class DynamicSidebar extends Component
                     'route_group_pattern' => 'editions.*',
                     'items' => [
                         'editions.employes' => ['title' => 'Liste Employés (PDF)'],
-                        'editions.pdf' => ['title' => 'Demande Virement (PDF)'],
+                        //'editions.pdf' => ['title' => 'Demande Virement (PDF)'],
                         'editions.declares' => ['title' => 'Liste Déclarés (PDF)'],
                     ],
                     'order' => 8,

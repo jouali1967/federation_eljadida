@@ -63,12 +63,13 @@ class EtatEmployes extends Component
 
     public function render()
     {
-        $employes = Personne::query()
-            ->when($this->search, function ($query) {
+      $employes = Personne::query()
+        ->with(['fonction','categorie'])
+        ->where('status', true)    
+        ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('nom', 'like', '%' . $this->search . '%')
                       ->orWhere('prenom', 'like', '%' . $this->search . '%')
-                      ->orWhere('fonction', 'like', '%' . $this->search . '%')
                       ->orWhere('phone', 'like', '%' . $this->search . '%');
                 });
             })

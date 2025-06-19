@@ -212,17 +212,21 @@
               <div class="row g-2">
                 <div class="col-md-4">
                   <div class="form-group mb-2">
-                    <label for="fonction" class="form-label mb-1">
-                      Fonction <span class="text-danger">*</span>
-                    </label>
+                    <label for="fonction" class="form-label mb-1">Fonction</label>
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">
-                        <i class="fas fa-briefcase"></i>
+                        <i class="fas fa-list"></i>
                       </span>
-                      <input id="fonction" type="text" class="form-control @error('fonction') is-invalid @enderror"
-                        wire:model.live="fonction" placeholder="Entrez la fonction">
+                      <select id="fonction"
+                        class="form-select form-select-sm scrollable-select @error('fonction_id') is-invalid @enderror"
+                        wire:model.live="fonction_id">
+                        <option value="">Sélectionnez une fonction</option>
+                        @foreach ($fonctions as $fonction)
+                            <option value="{{ $fonction->id }}">{{ $fonction->libelle }}</option>
+                        @endforeach
+                      </select>
                     </div>
-                    @error('fonction')
+                    @error('fonction_id')
                     <div class="invalid-feedback d-block">
                       {{ $message }}
                     </div>
@@ -231,21 +235,21 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group mb-2">
-                    <label for="categ" class="form-label mb-1">Catégorie</label>
+                    <label for="categ_id" class="form-label mb-1">Catégorie</label>
                     <div class="input-group input-group-sm">
                       <span class="input-group-text">
                         <i class="fas fa-list"></i>
                       </span>
                       <select id="categorie"
-                        class="form-select form-select-sm scrollable-select @error('categ') is-invalid @enderror"
-                        wire:model.live="categ">
+                        class="form-select form-select-sm scrollable-select @error('categ_id') is-invalid @enderror"
+                        wire:model.live="categ_id">
                         <option value="">Sélectionnez une catégorie</option>
-                        <option value="categorie1">Catégorie 1</option>
-                        <option value="categorie2">Catégorie 2</option>
-                        <option value="categorie3">Catégorie 3</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->libelle }}</option>
+                        @endforeach
                       </select>
                     </div>
-                    @error('categ')
+                    @error('categ_id')
                     <div class="invalid-feedback d-block">
                       {{ $message }}
                     </div>

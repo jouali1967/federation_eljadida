@@ -19,7 +19,7 @@ class Personne extends Model
     'date_nais',
     'sexe',
     'sit_fam',
-    'email','fonction','banque','num_compte','salaire_base','cin','categ','status'
+    'email','fonction_id','banque','num_compte','salaire_base','cin','categ_id','status'
   ];
   protected $casts = [
     'date_embauche' => 'date:d/m/Y',
@@ -69,4 +69,13 @@ class Personne extends Model
   public function augmentations(){
     return $this->hasMany(Augmentation::class);
   }
+  public function fonction()
+    {
+        return $this->belongsTo(Fonction::class);
+    }
+    
+    public function categorie()
+    {
+        return $this->belongsTo(Category::class,'categ_id');
+    }
 }
