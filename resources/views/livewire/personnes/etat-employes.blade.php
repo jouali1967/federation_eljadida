@@ -113,6 +113,7 @@
                       @endif
                     </th>
                     <th>Categorie</th>
+                    <th>N° CNSS</th>
                     <th scope="col" style="width: 10%">Sexe</th>
                     <th scope="col" style="width: 15%" wire:click="sortBy('date_embauche')" style="cursor: pointer;">
                       Date Embauche
@@ -141,6 +142,11 @@
                     </td>
                     <td>
                       <span class="badge bg-secondary">{{ $employe->categorie->libelle ?: 'Non définie' }}</span>
+                    </td>
+                    <td>
+                      <span class="badge bg-secondary">
+                        {{ optional($employe->inscriptions->first())->num_cnss ?: 'Non définie' }}
+                      </span>
                     </td>
                     <td>
                       @if($employe->sexe === 'M')

@@ -63,8 +63,11 @@ class EtatEmployes extends Component
 
     public function render()
     {
+      // $tests= Personne::with(['fonction','categorie','inscriptions'])
+      //     ->where('status',true)->get();
+      //     dd($tests);
       $employes = Personne::query()
-        ->with(['fonction','categorie'])
+        ->with(['fonction','categorie','inscriptions'])
         ->where('status', true)    
         ->when($this->search, function ($query) {
                 $query->where(function ($q) {

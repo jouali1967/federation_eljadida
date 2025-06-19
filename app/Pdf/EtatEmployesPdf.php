@@ -47,6 +47,7 @@ class EtatEmployesPdf extends TCPDF
         $this->Cell(45, 8, 'Nom et Prénom', 1, 0, 'C', false);
         $this->Cell(25, 8, 'Fonction', 1, 0, 'C', false);
         $this->Cell(25, 8, 'Categorie', 1, 0, 'C', false);
+        $this->Cell(20, 8, 'N° CNSS', 1, 0, 'C', false);
         $this->Cell(20, 8, 'CIN', 1, 0, 'C', false);
         $this->Cell(25, 8, 'Date Embauche', 1, 0, 'C', false);
         $this->Cell(25, 8, 'Telephone', 1, 0, 'C', false);
