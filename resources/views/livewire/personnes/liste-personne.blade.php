@@ -1,6 +1,6 @@
-<div class="container mt-2">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
+<div class="container mt-1">
+  {{-- <div class="row justify-content-center"> --}}
+    {{-- <div class="col-md-10"> --}}
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
           <h5 class="mb-0">Liste des personnes</h5>
@@ -11,14 +11,25 @@
 
         <div class="card-body">
           <div class="mb-3">
-            <div class="input-group" style="max-width: 600px;">
+            <div class="input-group" style="max-width: 900px;">
               <span class="input-group-text"><i class="fas fa-search"></i></span>
               <input type="text" class="form-control" wire:model.live="search" placeholder="Rechercher...">
-              <select id="categorie" class="form-select form-select-sm ms-2" wire:model.live="categ">
+              <select id="categorie" class="form-select form-select-sm ms-2" wire:model.live="categ_id">
                 <option value="">Sélectionnez une catégorie</option>
-                <option value="categorie1">Catégorie 1</option>
-                <option value="categorie2">Catégorie 2</option>
-                <option value="categorie3">Catégorie 3</option>
+                @foreach ($categories as $categorie)
+                <option value="{{ $categorie->id }}">{{ $categorie->libelle }}</option>
+                @endforeach
+              </select>
+              <select id="fonction" class="form-select form-select-sm ms-2" wire:model.live="fonction_id">
+                <option value="">Sélectionnez une fonction</option>
+                @foreach ($fonctions as $fonction)
+                <option value="{{ $fonction->id }}">{{ $fonction->libelle }}</option>
+                @endforeach
+              </select>
+              <select id="status" class="form-select form-select-sm ms-2" wire:model.live="status">
+                <option value="">Sélectionnez status</option>
+                <option value="1">Actif</option>
+                <option value="0">Inactif</option>
               </select>
             </div>
           </div>
@@ -45,7 +56,8 @@
                     <i class="fas fa-sort ms-1 text-muted"></i>
                     @endif
                   </th>
-                  <th>Téléphone</th>
+                  <th>Fonction</th>
+                  <th>Categorie</th>
                   <th wire:click="sortBy('date_embauche')" style="cursor: pointer;">
                     Date d'embauche
                     @if($sortField === 'date_embauche')
@@ -54,6 +66,7 @@
                     <i class="fas fa-sort ms-1 text-muted"></i>
                     @endif
                   </th>
+                  <th>Status</th>
                   <th wire:click="sortBy('date_nais')" style="cursor: pointer;">
                     Date de Naissance
                     @if($sortField === 'date_nais')
@@ -82,8 +95,16 @@
                   </td>
                   <td>{{ $personne->nom }}</td>
                   <td>{{ $personne->prenom }}</td>
-                  <td>{{ $personne->phone }}</td>
+                  <td>{{ $personne->fonction->libelle }}</td>
+                  <td>{{ $personne->categorie->libelle }}</td>
                   <td>{{ $personne->date_embauche }}</td>
+                  <td>
+                    @if($personne->status)
+                    <span class="badge bg-success">Actif</span>
+                    @else
+                    <span class="badge bg-danger">Inactif</span>
+                    @endif
+                  </td>
                   <td>{{ $personne->date_nais }}</td>
                   <td class="text-center">
                     <a href="{{ route('personnes.edit', $personne->id) }}" class="btn btn-sm btn-info me-1"
@@ -110,8 +131,9 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+      {{--
+    </div> --}}
+    {{-- </div> --}}
 </div>
 
 @script()

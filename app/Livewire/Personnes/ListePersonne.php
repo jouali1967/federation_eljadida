@@ -3,9 +3,11 @@
 namespace App\Livewire\Personnes;
 
 use Livewire\Component;
+use App\Models\Category;
+use App\Models\Fonction;
 use App\Models\Personne;
-use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
+use Livewire\WithoutUrlPagination;
 
 class ListePersonne extends Component
 {
@@ -15,7 +17,9 @@ class ListePersonne extends Component
   public $search = '';
   public $sortField = 'nom';
   public $sortDirection = 'asc';
-  public $categ = '';
+  public $categ_id = '';
+  public $fonction_id = '';
+  public $status = '';
 
   protected $listeners = ['personne-created' => '$refresh'];
 
@@ -42,20 +46,26 @@ class ListePersonne extends Component
 
   public function render()
   {
-    return view('livewire.personnes.liste-personne', [
-      'personnes' => Personne::query()
-        ->when($this->categ, function ($query) {
-          $query->where('categ', $this->categ);
-        })
-        ->where(function ($query) {
-          $query->where('nom', 'like', '%' . $this->search . '%')
-            ->orWhere('prenom', 'like', '%' . $this->search . '%')
-            ->orWhere('phone', 'like', '%' . $this->search . '%')
-            ->orWhere('adresse', 'like', '%' . $this->search . '%');
-        })
-        ->orderBy($this->sortField, $this->sortDirection)
-        ->paginate(5)
-    ]);
+    $fonctions = Fonction::all();
+    $categories = Category::all();
+    $personnes = Personne::query()
+      ->when($this->categ_id, function ($query) {
+        $query->where('categ_id', $this->categ_id);
+      })
+      ->when($this->fonction_id, function ($query) {
+        $query->where('fonction_id', $this->fonction_id);
+      })
+      ->when($this->status !== '', function ($query) {
+        $query->where('status', (bool) $this->status);
+      })
+
+      ->where(function ($query) {
+        $query->where('nom', 'like', '%' . $this->search . '%')
+          ->orWhere('prenom', 'like', '%' . $this->search . '%');
+      })
+      ->orderBy($this->sortField, $this->sortDirection)
+      ->paginate(10);
+    return view('livewire.personnes.liste-personne', compact('personnes', 'fonctions', 'categories'));
   }
 
   public function delete($id)
