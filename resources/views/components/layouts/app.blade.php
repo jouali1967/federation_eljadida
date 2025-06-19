@@ -98,9 +98,11 @@
     <!--end::Sidebar-->
     <!--begin::App Main-->
     <main class="app-main">
-      <div class="app-content">
+      <div class="container">
         {{ $slot }}
       </div>
+      {{-- <div class="app-content"> </div>      --}}
+      
       <!--end::App Content-->
     </main>
     <!--end::App Main-->

@@ -1,6 +1,6 @@
-<div class="container mt-2">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
+<div class="container mt-1">
+  {{-- <div class="row justify-content-center"> --}}
+    {{-- <div class="col-md-10"> --}}
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white py-2">
           <h5 class="mb-0">Modifier la personne</h5>
@@ -359,7 +359,7 @@
               </div>
             </div>
 
-            <!-- Statut -->
+            <!-- Statut et Photo de l'employé sur la même ligne -->
             <div class="row g-2">
               <div class="col-md-4">
                 <div class="form-group mb-2">
@@ -374,15 +374,9 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-            <!-- Photo de l'employé -->
-            <div class="row g-2">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group mb-2">
-                  <label for="photo_emp" class="form-label mb-1">
-                    Photo de l'employé
-                  </label>
+                  <label for="photo_emp" class="form-label mb-1">Photo de l'employé</label>
                   <input id="photo_emp" type="file" class="form-control @error('photo_emp') is-invalid @enderror"
                     wire:model="photo_emp" accept="image/*">
                   @error('photo_emp')
@@ -393,12 +387,12 @@
                   @if ($photo_emp)
                   <div class="mt-2">
                     <img src="{{ $photo_emp->temporaryUrl() }}" alt="Aperçu photo" class="img-thumbnail"
-                      style="max-width: 150px;">
+                      style="max-width: 80px;">
                   </div>
                   @elseif($photo_emp_db)
                   <div class="mt-2">
                     <img src="{{ asset('storage/' . $photo_emp_db) }}" alt="Photo actuelle" class="img-thumbnail"
-                      style="max-width: 150px;">
+                      style="max-width: 80px;">
                   </div>
                   @endif
                 </div>
@@ -415,8 +409,9 @@
           </form>
         </div>
       </div>
-    </div>
-  </div>
+      {{--
+    </div> --}}
+    {{-- </div> --}}
 </div>
 
 @script()
