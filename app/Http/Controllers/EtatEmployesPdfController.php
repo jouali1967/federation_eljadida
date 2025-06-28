@@ -23,7 +23,7 @@ class EtatEmployesPdfController extends Controller
     $pdf->SetY(28);
 
     // Récupération des employés
-    $employes = Personne::with(['fonction','categorie','inscriptions'])
+    $employes = Personne::with(['fonction','categorie'])
       ->where('status',true)
       ->orderBy('nom')->orderBy('prenom')->get();
       $datas = array_merge(
@@ -47,7 +47,7 @@ class EtatEmployesPdfController extends Controller
       $pdf->Cell(45, 6, mb_strtoupper($employe->nom . ' ' . $employe->prenom, 'UTF-8'), 1, 0, 'L', false);
       $pdf->Cell(25, 6, $employe->fonction->libelle ?: '-', 1, 0, 'L', false);
       $pdf->Cell(25, 6, $employe->categorie->libelle ?: '-', 1, 0, 'L', false);
-      $pdf->Cell(20, 6, optional($employe->inscriptions->first())->num_cnss ?: '-', 1, 0, 'L', false);
+      $pdf->Cell(20, 6, $employe->num_cnss ?: '-', 1, 0, 'L', false);
       $pdf->Cell(20, 6, $employe->cin ?: '-', 1, 0, 'L', false);
       $pdf->Cell(25, 6, $employe->date_embauche ?: '-', 1, 0, 'C', false);
       $pdf->Cell(25, 6, $employe->phone ?: '-', 1, 1, 'C', false);

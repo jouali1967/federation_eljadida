@@ -19,7 +19,9 @@ class Personne extends Model
     'date_nais',
     'sexe',
     'sit_fam',
-    'email','fonction_id','banque','num_compte','salaire_base','cin','categ_id','status','photo_emp'
+    'email','fonction_id','banque','num_compte',
+    'salaire_base','cin','categ_id','status',
+    'photo_emp','num_cnss','nbr_enf'
   ];
   protected $casts = [
     'date_embauche' => 'date:d/m/Y',
@@ -60,12 +62,12 @@ class Personne extends Model
   public function primes(){
     return $this->hasMany(Prime::class);
   }
-  public function inscriptions(){
-    return $this->hasMany(Cnss::class);
-  }
-  public function enfants(){
-    return $this->hasMany(Enfant::class);
-  }
+  // public function inscriptions(){
+  //   return $this->hasMany(Cnss::class);
+  // }
+  // public function enfants(){
+  //   return $this->hasMany(Enfant::class);
+  // }
   public function augmentations(){
     return $this->hasMany(Augmentation::class);
   }

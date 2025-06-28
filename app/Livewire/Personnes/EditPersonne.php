@@ -68,6 +68,10 @@ class EditPersonne extends Component
   #[Rule('nullable|image|max:2048')]
   public $photo_emp;
   public $photo_emp_db;
+  #[Rule('nullable')]
+  public $num_cnss;
+  #[Rule('nullable|numeric')]
+  public $nbr_enf;
 
   public function messages()
   {
@@ -102,6 +106,8 @@ class EditPersonne extends Component
     $this->categ_id = $this->personne->categ_id;
     $this->status = (bool) $this->personne->status;
     $this->photo_emp_db = $this->personne->photo_emp;
+    $this->num_cnss = $this->personne->num_cnss;
+    $this->nbr_enf = $this->personne->nbr_enf;
   }
 
 
@@ -109,11 +115,34 @@ class EditPersonne extends Component
   {
     $validatedData = $this->validate();
     $validatedData['status'] = $this->status ? 1 : 0;
-    if ($this->photo_emp) {
+    /*if ($this->photo_emp) {
       $validatedData['photo_emp'] = $this->photo_emp->store('photos', 'public');
     } else {
       $validatedData['photo_emp'] = $this->photo_emp_db;
+    }*/
+    if ($this->photo_emp) {
+      // S'assurer que le dossier uploads existe à la racine du site
+      $uploadsRoot = public_path('uploads');
+      if (!file_exists($uploadsRoot)) {
+        mkdir($uploadsRoot, 0777, true);
+      }
+      $nomFichier = uniqid() . '.' . $this->photo_emp->getClientOriginalExtension();
+      $destination = $uploadsRoot . DIRECTORY_SEPARATOR . $nomFichier;
+      $tmpPath = $this->photo_emp->getRealPath();
+      if (copy($tmpPath, $destination)) {
+        @unlink($tmpPath);
+        $validatedData['photo_emp'] = $nomFichier; // Enregistre uniquement le nom du fichier
+      } else {
+        session()->flash('error', "Erreur lors de la copie de la photo. Vérifiez les permissions du dossier uploads.");
+        return;
+      }
+    } else {
+      $validatedData['photo_emp'] = $this->personne->photo_emp;
     }
+
+
+    $validatedData['nbr_enf'] = $this->nbr_enf ?: 0; 
+    //dd($validatedData);
     $this->personne->update($validatedData);
     $this->redirect(route('personnes.index'), navigate: true);
   }

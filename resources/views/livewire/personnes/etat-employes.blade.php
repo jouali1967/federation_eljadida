@@ -100,6 +100,7 @@
                 <thead class="table-dark">
                   <tr>
                     <th scope="col" style="width: 5%">#</th>
+                    <th scope="col" style="width: 20%">Photo</th>
                     <th scope="col" style="width: 25%" wire:click="sortBy('nom')" style="cursor: pointer;">
                       Nom et Prénom
                       @if($sortField === 'nom')
@@ -114,7 +115,7 @@
                     </th>
                     <th>Categorie</th>
                     <th>N° CNSS</th>
-                    <th scope="col" style="width: 10%">Sexe</th>
+                    {{-- <th scope="col" style="width: 10%">Sexe</th> --}}
                     <th scope="col" style="width: 15%" wire:click="sortBy('date_embauche')" style="cursor: pointer;">
                       Date Embauche
                       @if($sortField === 'date_embauche')
@@ -135,6 +136,15 @@
                   <tr>
                     <td>{{ $employes->firstItem() + $index }}</td>
                     <td>
+                     @if($employe->photo_emp)
+                    <img src="{{ asset('uploads/' . basename($employe->photo_emp)) }}" alt="Photo"
+                      class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
+                    @else
+                    <span class="text-muted">-</span>
+                    @endif
+
+                    </td>
+                    <td>
                       <strong>{{ strtoupper($employe->nom) }} {{ ucfirst(strtolower($employe->prenom)) }}</strong>
                     </td>
                     <td>
@@ -145,10 +155,11 @@
                     </td>
                     <td>
                       <span class="badge bg-secondary">
-                        {{ optional($employe->inscriptions->first())->num_cnss ?: 'Non définie' }}
+                        {{-- {{ optional($employe->inscriptions->first())->num_cnss ?: 'Non définie' }} --}}
+                         {{ $employe->num_cnss ?: 'Non définie' }} 
                       </span>
                     </td>
-                    <td>
+                    {{-- <td>
                       @if($employe->sexe === 'M')
                       <i class="fas fa-mars text-primary"></i> Homme
                       @elseif($employe->sexe === 'F')
@@ -156,7 +167,7 @@
                       @else
                       <span class="text-muted">-</span>
                       @endif
-                    </td>
+                    </td> --}}
                     <td>
                       @if($employe->date_embauche)
                       <small class="text-muted">{{ $employe->date_embauche }}</small>

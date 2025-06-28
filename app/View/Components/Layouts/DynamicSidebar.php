@@ -61,24 +61,24 @@ class DynamicSidebar extends Component
                     ],
                     'order' => 4,
                 ],
-                'Gestion Enfants' => [
-                    'permissions' => ['enfants.create'],
-                    'icon' => 'bi bi-people-fill',
-                    'route_group_pattern' => ['enfants.*'],
-                    'items' => [
-                        'enfants.create' => ['title' => 'Gestion des enfants'],
-                    ],
-                    'order' => 4,
-                ],
-                'Gestion Cnss' => [
-                    'permissions' => ['cnss.create'],
-                    'icon' => 'bi bi-building-fill-check',
-                    'route_group_pattern' => ['cnss.*'],
-                    'items' => [
-                        'cnss.create' => ['title' => 'Gestion cnss'],
-                    ],
-                    'order' => 5,
-                ],
+                // 'Gestion Enfants' => [
+                //     'permissions' => ['enfants.create'],
+                //     'icon' => 'bi bi-people-fill',
+                //     'route_group_pattern' => ['enfants.*'],
+                //     'items' => [
+                //         'enfants.create' => ['title' => 'Gestion des enfants'],
+                //     ],
+                //     'order' => 4,
+                // ],
+                // 'Gestion Cnss' => [
+                //     'permissions' => ['cnss.create'],
+                //     'icon' => 'bi bi-building-fill-check',
+                //     'route_group_pattern' => ['cnss.*'],
+                //     'items' => [
+                //         'cnss.create' => ['title' => 'Gestion cnss'],
+                //     ],
+                //     'order' => 5,
+                // ],
                 'Augmentations' => [
                     'permissions' => ['augmentations.create'],
                     'icon' => 'bi bi-graph-up-arrow',

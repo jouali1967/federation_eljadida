@@ -14,16 +14,16 @@
             <div class="input-group" style="max-width: 900px;">
               <span class="input-group-text"><i class="fas fa-search"></i></span>
               <input type="text" class="form-control" wire:model.live="search" placeholder="Rechercher...">
+                            <select id="fonction" class="form-select form-select-sm ms-2" wire:model.live="fonction_id">
+                <option value="">Sélectionnez une fonction</option>
+                @foreach ($fonctions as $fonction)
+                <option value="{{ $fonction->id }}">{{ $fonction->libelle }}</option>
+                @endforeach
+              </select>
               <select id="categorie" class="form-select form-select-sm ms-2" wire:model.live="categ_id">
                 <option value="">Sélectionnez une catégorie</option>
                 @foreach ($categories as $categorie)
                 <option value="{{ $categorie->id }}">{{ $categorie->libelle }}</option>
-                @endforeach
-              </select>
-              <select id="fonction" class="form-select form-select-sm ms-2" wire:model.live="fonction_id">
-                <option value="">Sélectionnez une fonction</option>
-                @foreach ($fonctions as $fonction)
-                <option value="{{ $fonction->id }}">{{ $fonction->libelle }}</option>
                 @endforeach
               </select>
               <select id="status" class="form-select form-select-sm ms-2" wire:model.live="status">
@@ -87,11 +87,12 @@
                   <td>{{ $i++ }}</td>
                   <td>
                     @if($personne->photo_emp)
-                    <img src="{{ asset('storage/' . $personne->photo_emp) }}" alt="Photo" class="rounded-circle"
-                      style="width:40px; height:40px; object-fit:cover;">
+                    <img src="{{ asset('uploads/' . basename($personne->photo_emp)) }}" alt="Photo"
+                      class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
                     @else
                     <span class="text-muted">-</span>
                     @endif
+
                   </td>
                   <td>{{ $personne->nom }}</td>
                   <td>{{ $personne->prenom }}</td>

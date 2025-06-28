@@ -33,7 +33,7 @@ class PersonnesDeclares extends Component
     // Extraire le mois et l'année
     [$mois, $annee] = explode('/', $this->date_declaration);
     // Requête pour récupérer les employés déclarés avec les infos demandées
-    $query = Declaration::with(['personne', 'personne.inscriptions'])
+    $query = Declaration::with(['personne'])
       ->whereMonth('date_dec', $mois)
       ->whereYear('date_dec', $annee);
     $total = $query->count();
@@ -43,12 +43,12 @@ class PersonnesDeclares extends Component
       ->get();
     $this->employes = $declarations->map(function ($declaration) {
       $personne = $declaration->personne;
-      $cnss = $personne->inscriptions->first();
+      //$cnss = $personne->inscriptions->first();
       return [
         'nom' => $personne->nom,
         'prenom' => $personne->prenom,
-        'num_cnss' => $cnss ? $cnss->num_cnss : null,
-        'nombre_enfants' => $personne->enfants ? $personne->enfants->count() : 0,
+        'num_cnss' => $personne->cnss?:'-',
+        'nombre_enfants' => $personne->nbr_enf ?:0,
         'situation_famille' => $personne->sit_fam,
         'salaire_base' => $personne->salaire_base,
         'montant_dec' => $declaration->mont_dec,

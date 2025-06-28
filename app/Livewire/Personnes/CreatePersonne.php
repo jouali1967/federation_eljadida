@@ -66,6 +66,10 @@ class CreatePersonne extends Component
   public $status = true;
   #[Rule('nullable|image|max:2048')]
   public $photo_emp;
+  #[Rule('nullable')]
+  public $num_cnss;
+  #[Rule('nullable|numeric')]
+  public $nbr_enf;
 
   public function messages()
   {
@@ -157,9 +161,30 @@ class CreatePersonne extends Component
   public function save()
   {
     $validatedData = $this->validate();
-    if ($this->photo_emp) {
+    /*if ($this->photo_emp) {
       $validatedData['photo_emp'] = $this->photo_emp->store('photos', 'public');
+    }*/
+    if (!file_exists(public_path('uploads'))) {
+      mkdir(public_path('uploads'), 0777, true);
     }
+    // Gestion de l'upload de la photo
+    if ($this->photo_emp) {
+      $nomFichier = uniqid() . '.' . $this->photo_emp->getClientOriginalExtension();
+      $destination = public_path('uploads/' . $nomFichier);
+      $tmpPath = $this->photo_emp->getRealPath();
+      // Utiliser copy() puis unlink() pour éviter les problèmes de verrouillage Windows
+      if (copy($tmpPath, $destination)) {
+        @unlink($tmpPath);
+        $validatedData['photo_emp'] = $nomFichier;
+      } else {
+        // Gestion d'erreur explicite
+        session()->flash('error', "Erreur lors de la copie de la photo. Vérifiez les permissions du dossier uploads.");
+        return;
+      }
+    } else {
+      $validatedData['photo_emp'] = null;
+    }
+    $validatedData['nbr_enf'] = $this->nbr_enf ?: 0; 
     Personne::create($validatedData);
     $this->reset();
   }
