@@ -26,14 +26,13 @@ class GestionSalaire extends Component
   {
     $this->validate();
     // Convertir la date du format m/Y en Carbon
-    $dateVirement = Carbon::createFromFormat('m/Y', $this->date_virement);
+    $dateVirement = Carbon::createFromFormat('d/m/Y', '01/' . $this->date_virement);
     // Récupérer les salaires existants pour le mois et l'année spécifiés
     $salairesExistants = Salaire::whereMonth('date_virement', $dateVirement->format('m'))
       ->whereYear('date_virement', $dateVirement->year)
       ->get();
-      
     // Récupérer toutes les personnes
-    $personnes = Personne::where('status',true)->get();
+    $personnes = Personne::where('status', true)->get();
     foreach ($personnes as $personne) {
       // Calculer les sanctions et les primes
       $montantSanction = Sanction::where('personne_id', $personne->id)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\VirementBanquePdfController;
+use App\Livewire\Augmentations\GlobaleAugmentation;
 use App\Livewire\HomePage;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Cnss\CnssCreate;
@@ -72,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
   //contributions
   Route::get('/augmentations', ListAugmentation::class)->name('augmentations.index')->middleware('permission:augmentations.index');
   Route::get('/augmentations/create', CreateAugmentation::class)->name('augmentations.create')->middleware('permission:augmentations.create');
+  Route::get('/augmentations/globale', GlobaleAugmentation::class)->name('augmentations.globale')->middleware('permission:augmentations.globale');
   //editions
   Route::get('/generate-pdf', [PdfPersonneController::class, 'generate'])->name('generate.pdf')->middleware('permission:generate.pdf');
   Route::get('/personnes/pdf', ListePersonnesPdf::class)->name('editions.pdf')->middleware('permission:editions.pdf');

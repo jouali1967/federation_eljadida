@@ -55,7 +55,7 @@ class DynamicSidebar extends Component
                     'icon' => 'bi bi-cash-coin',
                     'route_group_pattern' => ['salaires.*'],
                     'items' => [
-                        'salaires.gestion' => ['title' => 'Salaires'],
+                        'salaires.gestion' => ['title' => 'Preparer les Salaires'],
                         'salaires.impression' => ['title' => 'Impression Salaires'],
                         'salaires.virement' => ['title' => 'Virement Banque PDF'],
                     ],
@@ -86,18 +86,19 @@ class DynamicSidebar extends Component
                     'items' => [
                         'augmentations.create' => ['title' => 'Ajout Augmentation'],
                         'augmentations.index' => ['title' => 'Liste Augmentations'],
+                        'augmentations.globale' => ['title' => 'Augmentations Globale'],
                     ],
                     'order' => 6,
                 ],
-                'Declarations' => [
-                    'permissions' => ['declarations.create'],
-                    'icon' => 'bi bi-file-earmark-text-fill',
-                    'route_group_pattern' => ['declarations.*'],
-                    'items' => [
-                        'declarations.montants' => ['title' => 'Montants Declarés'],
-                    ],
-                    'order' => 7,
-                ],
+                // 'Declarations' => [
+                //     'permissions' => ['declarations.create'],
+                //     'icon' => 'bi bi-file-earmark-text-fill',
+                //     'route_group_pattern' => ['declarations.*'],
+                //     'items' => [
+                //         'declarations.montants' => ['title' => 'Montants Declarés'],
+                //     ],
+                //     'order' => 7,
+                // ],
                 'Editions' => [
                     'permissions' => ['editions.employes', 'editions.pdf', 'editions.declares'],
                     'icon' => 'bi bi-printer-fill',
@@ -105,7 +106,7 @@ class DynamicSidebar extends Component
                     'items' => [
                         'editions.employes' => ['title' => 'Liste Employés (PDF)'],
                         //'editions.pdf' => ['title' => 'Demande Virement (PDF)'],
-                        'editions.declares' => ['title' => 'Liste Déclarés (PDF)'],
+                        //'editions.declares' => ['title' => 'Liste Déclarés (PDF)'],
                     ],
                     'order' => 8,
                 ],

@@ -4,8 +4,8 @@
       <div class="d-flex align-items-end mb-1" style="gap: 8px;">
         <div>
           <label for="date_virement" class="form-label  fw-bold">Période de virement</label>
-          <input type="text" class="form-control @error('date_virement') is-invalid @enderror" id="date_virement" wire:model.live="date_virement" 
-             style="width: 300px;" placeholder="MM/YYYY">
+          <input type="text" class="form-control @error('date_virement') is-invalid @enderror" id="date_virement"
+            wire:model.live="date_virement" style="width: 300px;" placeholder="MM/YYYY">
           @error('date_virement')
           <span class="text-danger">{{ $message }}</span>
           @enderror
@@ -33,26 +33,28 @@
   <div id="salaire-table-section">
     <div class="d-flex align-items-center justify-content-between mb-1" style="gap: 8px;">
       <div style="flex:1; text-align:left;">
-        <button class="btn btn-primary btn-sm no-print" wire:click.prevent="imprimerPDF" @ouvrir-pdf.window="window.open($event.detail, '_blank')">
+        <button class="btn btn-primary btn-sm no-print" wire:click.prevent="imprimerPDF"
+          @ouvrir-pdf.window="window.open($event.detail, '_blank')">
           Imprimer (PDF)
         </button>
       </div>
       <div class="mx-auto" style="flex:1; text-align:center;">
         <h6 class="fw-bold mb-0" style="font-size:1rem;">Période :
           @if(isset($mois) && isset($annee))
-            {{ str_pad($mois, 2, '0', STR_PAD_LEFT) }}/{{ $annee }}
+          {{ str_pad($mois, 2, '0', STR_PAD_LEFT) }}/{{ $annee }}
           @endif
         </h6>
       </div>
       <div style="flex:1; text-align:right;">
-        <input type="text" class="form-control form-control-sm" style="max-width: 220px; display:inline-block;" placeholder="Rechercher par nom ou prénom..." wire:model.live="search">
+        <input type="text" class="form-control form-control-sm" style="max-width: 220px; display:inline-block;"
+          placeholder="Rechercher par nom ou prénom..." wire:model.live="search">
       </div>
     </div>
 
     <table class="table table-bordered table-sm mt-1">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>#</th>
           <th>Nom</th>
           <th>Salaire de Base</th>
           <th>Montant des Primes</th>
@@ -61,14 +63,17 @@
         </tr>
       </thead>
       <tbody>
+        @php $i = ($salaires instanceof \Illuminate\Pagination\LengthAwarePaginator) ?
+        ($salaires->currentPage() - 1) *
+        $salaires->perPage() + 1 : 1; @endphp
         @foreach($salaires as $salaire)
         <tr>
-          <td>{{ $salaire->personne->id }}</td>
+          <td>{{ $i++ }}</td>
           <td>{{ $salaire->personne->nom }} {{ $salaire->personne->prenom }}</td>
           <td style="text-align: right;">{{ $salaire->salaire_base }}</td>
-          <td  style="text-align: right;">{{ $salaire->montant_prime }}</td>
-          <td  style="text-align: right;">{{ $salaire->montant_sanction }}</td>
-          <td  style="text-align: right;">{{ $salaire->montant_vire }}</td>
+          <td style="text-align: right;">{{ $salaire->montant_prime }}</td>
+          <td style="text-align: right;">{{ $salaire->montant_sanction }}</td>
+          <td style="text-align: right;">{{ $salaire->montant_vire }}</td>
         </tr>
         @endforeach
       </tbody>

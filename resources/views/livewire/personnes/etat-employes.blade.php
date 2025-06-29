@@ -122,7 +122,7 @@
                       <i class="fas fa-sort-{{ $sortDirection === 'asc' ? 'up' : 'down' }} ms-1"></i>
                       @endif
                     </th>
-                    <th scope="col" style="width: 15%">Téléphone</th>
+                    {{-- <th scope="col" style="width: 15%">Téléphone</th> --}}
                     <th scope="col" style="width: 15%" wire:click="sortBy('salaire_base')" style="cursor: pointer;">
                       Salaire Base
                       @if($sortField === 'salaire_base')
@@ -175,7 +175,7 @@
                       <span class="text-muted">-</span>
                       @endif
                     </td>
-                    <td>
+                    {{-- <td>
                       @if($employe->phone)
                       <a href="tel:{{ $employe->phone }}" class="text-decoration-none">
                         <i class="fas fa-phone text-success me-1"></i>{{ $employe->phone }}
@@ -183,7 +183,7 @@
                       @else
                       <span class="text-muted">-</span>
                       @endif
-                    </td>
+                    </td> --}}
                     <td>
                       @if($employe->salaire_base)
                       <strong class="text-success">{{ number_format($employe->salaire_base, 0, ',', ' ') }} DH</strong>
