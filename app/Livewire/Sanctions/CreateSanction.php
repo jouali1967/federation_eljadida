@@ -99,9 +99,6 @@ class CreateSanction extends Component
 
     public function render()
     {
-      $results=Personne::find(3)->enfants()
-              ->where('sexe','M')->get();  
-      //dd($results);
       return view('livewire.sanctions.create-sanction');
     }
 } 

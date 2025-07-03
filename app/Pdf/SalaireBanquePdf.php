@@ -11,12 +11,14 @@ class SalaireBanquePdf extends TCPDF
   protected $rib;
   protected $first_signataire;
   protected $second_signataire;
+  protected $categ_id;
 
   // Constructor to receive the data
-  public function __construct($rib, $first_signataire, $second_signataire, $dateVirement, $orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false)
+  public function __construct($rib, $first_signataire, $second_signataire, $dateVirement,$categ_id, $orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false)
   {
     parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache);
-    $this->rib = $rib; // String 'dd/mm/YYYY'
+    $this->categ_id = $categ_id; 
+    $this->rib = $rib; 
     $this->first_signataire = $first_signataire;
     $this->second_signataire = $second_signataire;
     $this->dateVirement = $dateVirement;
@@ -27,7 +29,8 @@ class SalaireBanquePdf extends TCPDF
     if ($this->getPage() === 1) {
       $this->SetFont('helvetica', 'B', 9);
       $this->SetXY(4, 6);
-      $this->Cell(0, 0, 'Fédération des associations', 0, 1);
+      $entete=$this->categ_id == 1 ? "Fédération des associations":"DAR ATALIBA des associations"; 
+      $this->Cell(0, 0, $entete, 0, 1);
       $this->Cell(0, 0, 'mly abdellah', 0, 1);
       $this->SetX(110);
       $this->Cell(120, 0, 'Mly Abdellah le :' . date('d/m/Y'), 0, 1);

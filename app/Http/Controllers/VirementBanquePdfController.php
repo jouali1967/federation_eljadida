@@ -12,20 +12,25 @@ class VirementBanquePdfController extends Controller
 {
   public function export(Request $request)
   {
-    // $mois = $request->input('mois');
-    // $annee = $request->input('annee');
+    $categ_id = $request->input('categ_id');
+    $first_sign = $request->input('first_sign');
+    $second_sign = $request->input('second_sign');
     $dateVirement = $request->query('date_virement');
     $date_vir= Carbon::createFromFormat('d/m/Y', $dateVirement);
 
     $rib = $request->input('rib');
-    $first_signataire = $request->input('first_signataire');
-    $second_signataire = $request->input('second_signataire');
+    $first_sign = $request->input('first_sign');
+    $second_sign = $request->input('second_sign');
     $salaires = Salaire::with('personne')
       ->whereMonth('date_virement', $date_vir->format('m'))
       ->whereYear('date_virement', $date_vir->year)
+              ->whereHas('personne', function ($q) use($categ_id) {
+          $q->where('categ_id',$categ_id ); // ✅ filtre sur la catégorie de la personne
+        })
+
       ->get();
 
-    $pdf = new SalaireBanquePdf($rib, $first_signataire,$second_signataire,$dateVirement, $orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false);
+    $pdf = new SalaireBanquePdf($rib, $first_sign,$second_sign,$dateVirement,$categ_id, $orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false);
     $pdf->SetMargins(10, 6, 10);
     $pdf->SetAutoPageBreak(true, 15);
     $pdf->AddPage('P');
@@ -63,9 +68,9 @@ class VirementBanquePdfController extends Controller
     $pdf->SetX(160);
     $pdf->Cell(20, 0, 'Signé', 0, 1,'');
     $pdf->setY($pdf->getY()+4);
-    $pdf->Cell(60,0,mb_strtoupper($first_signataire, 'UTF-8'),0,0);
-    $pdf->SetX(160);
-    $pdf->Cell(60,0,mb_strtoupper($second_signataire, 'UTF-8'),0,0);
+    $pdf->Cell(60,0,mb_strtoupper($first_sign, 'UTF-8'),0,0);
+    $pdf->SetX(140);
+    $pdf->Cell(60,0,mb_strtoupper($second_sign, 'UTF-8'),0,0);
 
 
     $pdf->Output('etat_salaires.pdf');

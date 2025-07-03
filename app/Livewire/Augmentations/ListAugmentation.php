@@ -7,11 +7,14 @@ use App\Models\Personne;
 use App\Models\Augmentation;
 use Livewire\WithPagination;
 use Livewire\Attributes\Rule;
-use Illuminate\Support\Facades\Auth;
+use Livewire\WithoutUrlPagination;
 
 class ListAugmentation extends Component
 {
   use WithPagination;
+  use WithoutUrlPagination;
+  public $paginationTheme = "bootstrap";
+
 
   public $personne_id;
   public $search = '';

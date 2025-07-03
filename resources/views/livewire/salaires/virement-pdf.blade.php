@@ -9,9 +9,9 @@
   </div>
   <div>
     <form wire:submit.prevent="afficherSalaires">
-      <div class="d-flex align-items-end mb-1" style="gap: 8px;">
-        <div class="form-group mb-2">
-          <label for="date_nais" class="form-label mb-1">Date de virement</label>
+      <div class="row mb-1">
+        <div class="col-md-3 form-group mb-2">
+          <label for="date_virement_input" class="form-label mb-1">Date de virement</label>
           <div class="input-group input-group-sm">
             <span class="input-group-text bg-light">
               <i class="fas fa-calendar"></i>
@@ -23,8 +23,66 @@
           <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
-        <div>
-          <button type="submit" class="btn btn-primary" style="margin-top: 24px;">
+        <div class="col-md-3 form-group mb-2">
+          <label for="categ_id" class="form-label mb-1">Catégorie</label>
+          <div class="input-group input-group-sm">
+            <span class="input-group-text">
+              <i class="fas fa-list"></i>
+            </span>
+            <select id="categorie"
+              class="form-select form-select-sm scrollable-select @error('categ_id') is-invalid @enderror"
+              wire:model.live="categ_id">
+              <option value="">Sélectionnez une catégorie</option>
+              @foreach ($categories as $category)
+              <option value="{{ $category->id }}">{{ $category->libelle }}</option>
+              @endforeach
+            </select>
+          </div>
+          @error('categ_id')
+          <div class="invalid-feedback d-block">
+            {{ $message }}
+          </div>
+          @enderror
+
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-md-4 form-group mb-2">
+          <label for="first_sign" class="form-label mb-1">
+            Premier Signataire <span class="text-danger">*</span>
+          </label>
+          <div class="input-group input-group-sm">
+            <span class="input-group-text">
+              <i class="fas fa-user"></i>
+            </span>
+            <input id="first_sign" type="text" class="form-control @error('first_sign') is-invalid @enderror"
+              wire:model.live="first_sign" placeholder="Entrez premier signataire">
+          </div>
+          @error('first_sign')
+          <div class="invalid-feedback d-block">
+            {{ $message }}
+          </div>
+          @enderror
+        </div>
+        <div class="col-md-4 form-group mb-2">
+          <label for="second_sign" class="form-label mb-1">
+            Second Signataire <span class="text-danger">*</span>
+          </label>
+          <div class="input-group input-group-sm">
+            <span class="input-group-text">
+              <i class="fas fa-user"></i>
+            </span>
+            <input id="second_sign" type="text" class="form-control @error('second_sign') is-invalid @enderror"
+              wire:model.live="second_sign" placeholder="Entrez second signataire">
+          </div>
+          @error('second_sign')
+          <div class="invalid-feedback d-block">
+            {{ $message }}
+          </div>
+          @enderror
+        </div>
+        <div class="col-md-3 d-flex align-items-end mb-2">
+          <button type="submit" class="btn btn-primary w-100">
             <i class="fas fa-calculator me-2"></i>
             Afficher les Salaires
           </button>
