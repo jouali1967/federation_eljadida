@@ -105,6 +105,7 @@ class DynamicSidebar extends Component
                     'route_group_pattern' => 'editions.*',
                     'items' => [
                         'editions.employes' => ['title' => 'Liste Employés (PDF)'],
+                        'editions.etat.categ' => ['title' => 'Employés par categorie'],
                         //'editions.pdf' => ['title' => 'Demande Virement (PDF)'],
                         //'editions.declares' => ['title' => 'Liste Déclarés (PDF)'],
                     ],

@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\EtatCategController;
 use App\Http\Controllers\VirementBanquePdfController;
 use App\Livewire\Augmentations\GlobaleAugmentation;
+use App\Livewire\Editions\ListEmpCateg;
 use App\Livewire\HomePage;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Cnss\CnssCreate;
@@ -84,6 +86,10 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/etat-employes', EtatEmployes::class)->name('editions.employes')->middleware('permission:editions.employes');
   Route::get('/etat-employes/pdf', [EtatEmployesPdfController::class, 'generate'])->name('etat.employes.pdf')->middleware('permission:etat.employes.pdf');
   Route::get('/etat-employes/download', [EtatEmployesPdfController::class, 'download'])->name('etat.employes.download')->middleware('permission:etat.employes.download');
+  //etat employes par categ
+    Route::get('/etats/categ', ListEmpCateg::class)->name('editions.etat.categ')->middleware('permission:editions.etat.categ');
+    Route::get('/etat-categ/pdf', [EtatCategController::class, 'generate'])->name('etat-categ-pdf')->middleware('permission:etat-categ-pdf');
+
 });
 Route::middleware(['auth', 'role:admin'])->group(function () {
   Route::get('/admin/dashboard', Dashboard::class)->name('admin.dashboard');
