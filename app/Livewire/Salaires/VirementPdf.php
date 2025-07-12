@@ -44,8 +44,19 @@ class VirementPdf extends Component
 
   public function imprimerPDF()
   {
-   $information = Federation::where('categorie', $this->categ_id)->first();
-    $this->dispatch('ouvrir-pdf', route('salaires.virement.pdf', [
+    $information = Federation::where('categorie', $this->categ_id)->first();
+    $this->dispatch('ouvrir-excel', route('salaires.virement.pdf', [
+      'date_virement' => $this->date_virement,
+      'rib' => $information->num_rib,
+      'first_sign' => $this->first_sign,
+      'second_sign' => $this->second_sign,
+      'categ_id' => $this->categ_id,
+    ]));
+  }
+  public function imprimerExcel()
+  {
+    $information = Federation::where('categorie', $this->categ_id)->first();
+    $this->dispatch('ouvrir-excel', route('salaires.virement.excel', [
       'date_virement' => $this->date_virement,
       'rib' => $information->num_rib,
       'first_sign' => $this->first_sign,

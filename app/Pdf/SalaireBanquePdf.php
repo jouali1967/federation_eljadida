@@ -29,9 +29,11 @@ class SalaireBanquePdf extends TCPDF
     if ($this->getPage() === 1) {
       $this->SetFont('helvetica', 'B', 9);
       $this->SetXY(4, 6);
-      $entete=$this->categ_id == 1 ? "Fédération des associations":"DAR ATALIBA des associations"; 
+      $entete=$this->categ_id == 4 ? "DAR ATALIBA MY ABDELLAH":"Fédération des associations"; 
       $this->Cell(0, 0, $entete, 0, 1);
-      $this->Cell(0, 0, 'mly abdellah', 0, 1);
+      if($this->categ_id == 1){
+        $this->Cell(0, 0, 'mly abdellah', 0, 1);
+      }
       $this->SetX(110);
       $this->Cell(120, 0, 'Mly Abdellah le :' . date('d/m/Y'), 0, 1);
       $this->SetX(145);
@@ -51,13 +53,22 @@ class SalaireBanquePdf extends TCPDF
       $text1 = "Nous avons L'honneur de vous demander de bien vouloir virer de notre compte ";
       $text2 = $this->rib;
       $text3 = " de la fédération des";
+      $textd=" de L'ASSOCIATION";
       $this->Cell($this->GetStringWidth($text1), 0, $text1, 0, 0);
       $this->SetFont('times', 'B', 10);
       $this->Cell($this->GetStringWidth($text2), 0, $text2, 0, 0);
       $this->SetFont('times', '', 10);
-      $this->Cell(0, 0, $text3, 0, 1);
+      if($this->categ_id == 4){
+        $this->Cell(0, 0, $textd, 0, 1);
+      }else{
+        $this->Cell(0, 0, $text3, 0, 1);
+      }
       $this->SetX(4);
-      $this->Cell(0, 0, 'Associations Mly Abdellah Veuillez créditer les comptes', 0, 1);
+      if($this->categ_id == 4){
+        $this->Cell(0, 0, ' DAR TALIBA MY ABDELLAH Veuillez créditer les comptes', 0, 1);
+      }else{
+        $this->Cell(0, 0, 'Associations Mly Abdellah Veuillez créditer les comptes', 0, 1);
+      }
       $this->SetX(4);
       $text4 = "ci-aprés,à partir de ";
       $text5 = $this->dateVirement;

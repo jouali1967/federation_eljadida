@@ -16,12 +16,12 @@ class CreatePersonne extends Component
   use WithFileUploads;
 
   #[Validate('required', message: 'Le nom est obligatoire.')]
-  #[Validate('regex:/^[A-Z0-9\s]+$/', message: 'Le nom doit contenir uniquement des majuscules, des chiffres et des espaces.')]
+  #[Validate('regex:/^[a-zA-Z0-9\s]+$/', message: 'Le nom doit contenir des chiffres et des espaces.')]
   public $nom;
   #[Rule('required', message: 'Le prenom est obligatoire.')]
-  #[Rule('regex:/^[A-Z0-9\s]+$/', message: 'Le prenom doit contenir uniquement des majuscules, des chiffres et des espaces.')]
+  #[Rule('regex:/^[a-zA-Z0-9\s]+$/', message: 'Le prenom doit contenir des chiffres et des espaces.')]
   public $prenom;
-  #[Rule('required', message: 'N° telephone est obligatoire.')]
+  #[Rule('nullable')]
   #[Rule('numeric', message: 'Le numéro de téléphone ne doit contenir que des chiffres.')]
   public $phone;
   #[Rule('required', message: 'Le champ adresse est obligatoire.')]

@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/salaires/impression/pdf', [SalaireImpressionPdfController::class, 'export'])->name('salaires.impression.pdf')->middleware('permission:salaires.impression.pdf');
   Route::get('/salaires/virement', VirementPdf::class)->name('salaires.virement')->middleware('permission:salaires.virement');
   Route::get('/salaires/virement/pdf', [VirementBanquePdfController::class, 'export'])->name('salaires.virement.pdf')->middleware('permission:salaires.virement.pdf');
+  Route::get('/salaires/virement/excel', [VirementBanquePdfController::class, 'generate'])->name('salaires.virement.excel')->middleware('permission:salaires.virement.excel');
 
   //cnss
   Route::get('/cnss/create', CnssCreate::class)->name('cnss.create')->middleware('permission:cnss.create');

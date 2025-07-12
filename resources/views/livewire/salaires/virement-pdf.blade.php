@@ -121,7 +121,11 @@
       <div style="flex:1; text-align:left;">
         <button class="btn btn-primary btn-sm no-print" wire:click.prevent="imprimerPDF"
           @ouvrir-pdf.window="window.open($event.detail, '_blank')">
-          Imprimer (PDF)
+          Impression (PDF)
+        </button>
+        <button class="btn btn-success btn-sm no-print" wire:click.prevent="imprimerExcel"
+          @ouvrir-excel.window="window.open($event.detail, '_blank')">
+          Impression (EXCEL)
         </button>
       </div>
       <div style="flex:1; text-align:right;">
