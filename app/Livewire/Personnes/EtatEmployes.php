@@ -12,11 +12,16 @@ class EtatEmployes extends Component
 
   public $nom1 = '';
   public $nom2 = '';
-  public $titre = 'État des Employés';
-  public $entreprise = 'Fédération des Associations Mly Abdellah';
+  public $etablissement = '';
+  public $titre = '';
   public $search = '';
   public $sortField = 'nom';
   public $sortDirection = 'asc';
+  // Rafraîchir le composant lors du changement d'établissement
+  public function updatedEtablissement()
+  {
+    $this->resetPage();
+  }
 
   protected $paginationTheme = 'bootstrap';
 
@@ -38,11 +43,16 @@ class EtatEmployes extends Component
 
   public function generatePdf()
   {
+    if ($this->etablissement === '4') {
+      $this->titre = 'DAR ATALIBA Mly Abdellah';
+    } else {
+      $this->titre = 'Fédération des Associations Mly Abdellah';
+    }
     $params = route('etat.employes.pdf', [
       'nom1' => $this->nom1,
       'nom2' => $this->nom2,
       'titre' => $this->titre,
-      'entreprise' => $this->entreprise
+      'etablissement' => $this->etablissement,
     ]);
     $this->dispatch('openEtatWindow', url: $params);
 
@@ -55,7 +65,7 @@ class EtatEmployes extends Component
       'nom1' => $this->nom1,
       'nom2' => $this->nom2,
       'titre' => $this->titre,
-      'entreprise' => $this->entreprise
+      'etablissement' => $this->etablissement,
     ];
 
     return redirect()->route('etat.employes.download', $params);
@@ -78,6 +88,13 @@ class EtatEmployes extends Component
     $employes = Personne::query()
       ->with(['fonction', 'categorie'])
       ->where('status', true)
+      ->when($this->etablissement, function ($query) {
+        if ($this->etablissement === '1,2,3') {
+          $query->whereIn('categ_id', [1, 2, 3]);
+        } elseif ($this->etablissement === '4') {
+          $query->where('categ_id', 4);
+        }
+      })
       ->when($this->search, function ($query) {
         $query->where(function ($q) {
           $q->where('nom', 'like', '%' . $this->search . '%')
@@ -85,7 +102,7 @@ class EtatEmployes extends Component
             ->orWhere('phone', 'like', '%' . $this->search . '%');
         });
       })
-      ->orderBy($this->sortField, $this->sortDirection)
+      ->orderBy('fonction_id', 'asc')
       ->paginate(10);
 
     $totalEmployes = Personne::count();
@@ -98,5 +115,22 @@ class EtatEmployes extends Component
       'totalSalaires' => $totalSalaires,
       'moyenneSalaire' => $moyenneSalaire
     ]);
+  }
+  public function generateExcel()
+  {
+    if ($this->etablissement === '4') {
+      $this->titre = 'DAR ATALIBA Mly Abdellah';
+    } else {
+      $this->titre = 'Fédération des Associations Mly Abdellah';
+    }
+
+    $params = route('etat.categ.excel', [
+      'nom1' => $this->nom1,
+      'nom2' => $this->nom2,
+      'titre' => $this->titre,
+      'etablissement' => $this->etablissement,
+    ]);
+
+    $this->dispatch('ouvrir-excel', $params);
   }
 }

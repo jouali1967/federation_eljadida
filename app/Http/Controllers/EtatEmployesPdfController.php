@@ -2,31 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployesExport;
 use App\Models\Personne;
-use Illuminate\Http\Request;
 use App\Pdf\EtatEmployesPdf;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EtatEmployesPdfController extends Controller
 {
   public function generate(Request $request)
   {
     // Récupération des paramètres optionnels
+    $etablissement = $request->query('etablissement', '');
     $nom1 = $request->query('nom1', '');
     $nom2 = $request->query('nom2', '');
-    $titre = $request->query('titre', 'État des Employés');
-
-    $entreprise = $request->query('entreprise', 'Fédération des Associations Mly Abdellah');
+    $titre = $request->query('titre', '');
 
     // Création du PDF
-    $pdf = new EtatEmployesPdf($titre, $entreprise);
+    $pdf = new EtatEmployesPdf($titre,  $etablissement);
     $pdf->AddPage();
     $pdf->SetY(28);
-
     // Récupération des employés
-    $employes = Personne::with(['fonction','categorie'])
-      ->where('status',true)
-      ->orderBy('nom')->orderBy('prenom')->get();
-      $datas = array_merge(
+    $employes = Personne::with(['fonction', 'categorie'])
+      ->where('status', true)
+      ->when($etablissement, function ($query) use ($etablissement) {
+        if ($etablissement === '1,2,3') {
+          $query->whereIn('categ_id', [1, 2, 3]);
+        } elseif ($etablissement === '4') {
+          $query->where('categ_id', 4);
+        }
+      })
+      ->orderBy('fonction_id')
+      ->get();
+    $datas = array_merge(
       array_fill(0, 10, ['nom' => 'test1', 'prenom' => 'hhhhh', 'fonction' => 'fffff', 'sexe' => 'F', 'date_embauche' => '868688', 'phone' => '7777', 'salaire_base' => 678]),
       array_fill(0, 10, ['nom' => 'test1', 'prenom' => 'hhhhh', 'fonction' => 'fffff', 'sexe' => 'F', 'date_embauche' => '868688', 'phone' => '7777', 'salaire_base' => 678]),
       array_fill(0, 10, ['nom' => 'test1', 'prenom' => 'hhhhh', 'fonction' => 'fffff', 'sexe' => 'F', 'date_embauche' => '868688', 'phone' => '7777', 'salaire_base' => 678]),
@@ -51,7 +59,7 @@ class EtatEmployesPdfController extends Controller
       $pdf->Cell(20, 6, $employe->cin ?: '-', 1, 0, 'L', false);
       $pdf->Cell(25, 6, $employe->date_embauche ?: '-', 1, 0, 'C', false);
       $pdf->Cell(25, 6, $employe->phone ?: '-', 1, 1, 'C', false);
-     // $totalSalaires += $employe->salaire_base ?: 0;
+      // $totalSalaires += $employe->salaire_base ?: 0;
       $compteur++;
       $count_pers = $count_pers - 1;
       if ($pdf->GetY() + 45 > ($pdf->getPageHeight() - $pdf->getFooterMargin()) and $count_pers < 5) {
@@ -69,5 +77,24 @@ class EtatEmployesPdfController extends Controller
     return $pdf->Output('etat_employes_' . date('Y-m-d') . '.pdf', 'I');
   }
 
+  public function imprimer_excel(Request $request)
+  {
+    $etablissement = $request->query('etablissement', '');
+    $nom1 = $request->query('nom1', '');
+    $nom2 = $request->query('nom2', '');
+    $titre = $request->query('titre', '');
+    $employes = Personne::with(['fonction', 'categorie'])
+      ->where('status', true)
+      ->when($etablissement, function ($query) use ($etablissement) {
+        if ($etablissement === '1,2,3') {
+          $query->whereIn('categ_id', [1, 2, 3]);
+        } elseif ($etablissement === '4') {
+          $query->where('categ_id', 4);
+        }
+      })
+      ->orderBy('fonction_id')
+      ->get();
+    return Excel::download(new EmployesExport($employes,$titre,$etablissement), 'employes.xlsx');
 
+  }
 }

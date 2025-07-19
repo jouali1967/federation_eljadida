@@ -10,24 +10,16 @@
           </div>
           <div class="card-body">
             <!-- Formulaire de configuration PDF -->
-            <div class="row mb-4">
-              <div class="col-md-6">
+            <div class="row mb-1">
+              <div class="col-md-8">
                 <div class="card border-info">
                   <div class="card-header bg-info text-white">
                     <h6 class="mb-0">Configuration du PDF</h6>
                   </div>
                   <div class="card-body">
-                    <div class="mb-3">
-                      <label for="titre" class="form-label">Titre du document</label>
-                      <input type="text" class="form-control" id="titre" wire:model="titre">
-                    </div>
-                    <div class="mb-3">
-                      <label for="entreprise" class="form-label">Nom de l'entreprise</label>
-                      <input type="text" class="form-control" id="entreprise" wire:model="entreprise">
-                    </div>
                     <div class="row">
                       <div class="col-md-6">
-                        <div class="mb-3">
+                        <div class="mb-1">
                           <label for="nom1" class="form-label">Nom du Directeur</label>
                           <input type="text" class="form-control" id="nom1" wire:model="nom1"
                             placeholder="Nom du directeur">
@@ -41,15 +33,31 @@
                         </div>
                       </div>
                     </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button type="button" class="btn btn-success me-md-2" wire:click="generatePdf">
-                        <i class="fas fa-eye me-1"></i>Aperçu PDF
-                      </button>
+                    <div class="row align-items-end mt-2">
+                      <div class="col-md-4">
+                        <label for="etablissement" class="form-label">Établissement</label>
+                        <select class="form-select" id="etablissement" wire:model.live="etablissement">
+                          <option value="">Sélectionner...</option>
+                          <option value="1,2,3">FAMA</option>
+                          <option value="4">DARATALIBA</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4 d-flex justify-content-end">
+                        <button type="button" class="btn btn-success w-100" wire:click="generatePdf">
+                          <i class="fas fa-eye me-1"></i>Aperçu PDF
+                        </button>
+                      </div>
+                      <div class="col-md-4 d-flex justify-content-end">
+                        <button type="button" class="btn btn-success w-100" wire:click="generateExcel"
+                        @ouvrir-excel.window="window.open($event.detail, '_blank')">
+                          <i class="fas fa-eye me-1"></i>Aperçu Excel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="card border-success">
                   <div class="card-header bg-success text-white">
                     <h6 class="mb-0">Statistiques</h6>
@@ -136,12 +144,12 @@
                   <tr>
                     <td>{{ $employes->firstItem() + $index }}</td>
                     <td>
-                     @if($employe->photo_emp)
-                    <img src="{{ asset('uploads/' . basename($employe->photo_emp)) }}" alt="Photo"
-                      class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
-                    @else
-                    <span class="text-muted">-</span>
-                    @endif
+                      @if($employe->photo_emp)
+                      <img src="{{ asset('uploads/' . basename($employe->photo_emp)) }}" alt="Photo"
+                        class="rounded-circle" style="width:40px; height:40px; object-fit:cover;">
+                      @else
+                      <span class="text-muted">-</span>
+                      @endif
 
                     </td>
                     <td>
@@ -156,7 +164,7 @@
                     <td>
                       <span class="badge bg-secondary">
                         {{-- {{ optional($employe->inscriptions->first())->num_cnss ?: 'Non définie' }} --}}
-                         {{ $employe->num_cnss ?: 'Non définie' }} 
+                        {{ $employe->num_cnss ?: 'Non définie' }}
                       </span>
                     </td>
                     {{-- <td>

@@ -1,9 +1,9 @@
 <div class="container-fluid p-0">
   <div class="position-relative">
       <!-- Image de fond -->
-      <img src="{{ asset('assets/images/employers.jpg?v=' . time()) }}" alt="Dashboard" 
+      <img src="{{ asset('assets/images/federation.jpeg?v=' . time()) }}" alt="Dashboard" 
            class="w-100" 
-           style="height: calc(88vh - 56px); object-fit: cover; filter: brightness(0.85);"
+           style="height: calc(98vh - 60px); object-fit: cover; filter: brightness(0.85);"
            alt="Employés">
       
       <!-- Overlay avec le texte -->

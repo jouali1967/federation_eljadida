@@ -87,6 +87,8 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/etat-employes', EtatEmployes::class)->name('editions.employes')->middleware('permission:editions.employes');
   Route::get('/etat-employes/pdf', [EtatEmployesPdfController::class, 'generate'])->name('etat.employes.pdf')->middleware('permission:etat.employes.pdf');
   Route::get('/etat-employes/download', [EtatEmployesPdfController::class, 'download'])->name('etat.employes.download')->middleware('permission:etat.employes.download');
+      Route::get('/etat-categ/excel', [EtatEmployesPdfController::class, 'imprimer_excel'])->name('etat.categ.excel')->middleware('permission:etat.categ.excel');
+
   //etat employes par categ
     Route::get('/etats/categ', ListEmpCateg::class)->name('editions.etat.categ')->middleware('permission:editions.etat.categ');
     Route::get('/etat-categ/pdf', [EtatCategController::class, 'generate'])->name('etat-categ-pdf')->middleware('permission:etat-categ-pdf');

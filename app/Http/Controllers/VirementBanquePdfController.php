@@ -49,9 +49,9 @@ class VirementBanquePdfController extends Controller
       $pdf->Cell(15, 5, $compt, 1,  0, 'C');
       $pdf->Cell(85, 5, $salaire->personne->full_name, 1,  0);
       $pdf->Cell(50, 5, $salaire->personne->num_compte, 1, 0, 'R');
-      $pdf->Cell(50, 5, $salaire->personne->salaire_base, 1, 0, 'R');
+      $pdf->Cell(50, 5, $salaire->montant_vire, 1, 0, 'R');
       $pdf->Ln();
-      $total += $salaire->personne->salaire_base;
+      $total += $salaire->montant_vire;
       $compt++;
       $count_pers = $count_pers - 1;
       if ($pdf->GetY() + 30 > ($pdf->getPageHeight() - $pdf->getFooterMargin()) and $count_pers < 5) {

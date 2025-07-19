@@ -6,15 +6,15 @@ use TCPDF;
 
 class EtatEmployesPdf extends TCPDF
 {
+    protected $etablissment;
     protected $titre;
     protected $date_edition;
-    protected $entreprise;
 
-    public function __construct($titre = 'État des Employés', $entreprise = 'Fédération des Associations Mly Abdellah')
+    public function __construct($titre , $etablissment)
     {
         parent::__construct('P', 'mm', 'A4', true, 'UTF-8', false);
+        $this->etablissment = $etablissment;
         $this->titre = $titre;
-        $this->entreprise = $entreprise;
         $this->date_edition = date('d/m/Y');
         
         // Configuration du PDF
@@ -37,10 +37,10 @@ class EtatEmployesPdf extends TCPDF
         // Logo ou en-tête entreprise
        if($this->page == 1) {
         $this->SetFont('helvetica', 'B', 14);
-        $this->Cell(0, 0, $this->entreprise, 0, 1, 'C');
+        $this->Cell(0, 0, $this->titre, 0, 1, 'C');
         $this->Ln(2);
         $this->SetFont('helvetica', 'B', 12);
-        $this->Cell(0, 0, $this->titre, 0, 1, 'C');
+        $this->Cell(0, 0, "État des Employés", 0, 1, 'C');
         $this->SetXY(5,20);
         $this->SetFont('helvetica', 'B', 9);
         $this->Cell(15, 8, 'N°', 1, 0, 'C', false);
