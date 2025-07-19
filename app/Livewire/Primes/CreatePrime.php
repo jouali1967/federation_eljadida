@@ -91,7 +91,7 @@ class CreatePrime extends Component
     {
         $validated = $this->validate();
         Prime::create($validated);
-        session()->flash('success', 'Sanction créée avec succès.');
+        session()->flash('success', 'Prime créée avec succès.');
         $this->reset();
     }
 
