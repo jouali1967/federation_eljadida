@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Personne;
+use App\Exports\CategExport;
 use App\Pdf\EtatCateg;
+use App\Models\Personne;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EtatCategController extends Controller
 {
@@ -41,5 +43,17 @@ class EtatCategController extends Controller
     }
     // Génération du PDF
     return $pdf->Output('etat_employes_' . date('Y-m-d') . '.pdf', 'I');
+  }
+
+  public function exporter_excel(Request $request){
+    $categorie = $request->query('categorie', '');
+    $categ_id = $request->query('categ_id', '');
+    $employes = Personne::with('fonction')
+      ->where('categ_id', $categ_id)
+      ->orderBy('nom')
+      ->get();
+    return Excel::download(new CategExport($employes,$categorie), 'employes.xlsx');
+
+    
   }
 }

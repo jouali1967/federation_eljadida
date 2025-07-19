@@ -34,8 +34,14 @@
       <div class="w-50">
         <input type="text" class="form-control form-control-sm" placeholder="Rechercher..." wire:model.live="search">
       </div>
-      <div>
-        <button class="btn btn-success btn-sm" wire:click="imprimer"><i class="fas fa-print"></i> Imprimer</button>
+      <div class="d-flex gap-2">
+        <button class="btn btn-success btn-sm" wire:click="imprimer">
+          <i class="fas fa-print"></i> Imprimer(Pdf)
+        </button>
+        <button class="btn btn-primary btn-sm" wire:click="exporter"
+          @ouvrir-excel.window="window.open($event.detail, '_blank')">
+          <i class="fas fa-file-excel"></i> Exporter(Excel)
+        </button>
       </div>
     </div>
     <div class="table-responsive">

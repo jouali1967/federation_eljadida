@@ -41,14 +41,14 @@ class ListEmpCateg extends Component
 
   public function imprimer()
   {
-    $categorie = null;
+    $categorie = '';
     if ($this->categ_id) {
       $cat = Category::find($this->categ_id);
-      $categorie = $cat ? $cat->libelle : '';
+      $categorie = $cat?->libelle ?? '';
     }
     $params = route('etat-categ-pdf', [
       'categorie' => $categorie,
-      'categ_id'=>$this->categ_id
+      'categ_id' => $this->categ_id
     ]);
     $this->dispatch('openEtatWindow', url: $params);
   }
@@ -70,5 +70,19 @@ class ListEmpCateg extends Component
         ->paginate(5);
     }
     return view('livewire.editions.list-emp-categ', compact('categories', 'employes'));
+  }
+
+  public function exporter()
+  {
+    $categorie = '';
+    if ($this->categ_id) {
+      $cat = Category::find($this->categ_id);
+      $categorie = $cat?->libelle ?? '';
+    }
+    $params = route('categ-excel', [
+      'categorie' => $categorie,
+      'categ_id' => $this->categ_id
+    ]);
+    $this->dispatch('ouvrir-excel', $params);
   }
 }
